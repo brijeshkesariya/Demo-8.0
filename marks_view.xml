@@ -1,0 +1,59 @@
+<?xml version ="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="action_view_student_det_form">
+			<field name="name">Students</field>
+			<field name="model">student.details</field>
+			<field name="arch" type="xml">
+				<form string="Student Det">
+					<sheet> 
+			           		<group>
+				   			<field name="stu_name" />
+						</group>
+					     <notebook>
+						 <page string='Marks'>
+						<field name="mark_ids">
+						      <tree editable='top'>
+							  <field name='subject' />
+						          <field name='achv' /> 
+							  <field name='from' />
+						      </tree>	 		
+						</field>
+					      </page>
+					  </notebook>
+				 	</sheet>	
+			       </form>
+			</field>
+           	</record>
+
+		<record model='ir.ui.view' id='view_student_details_tree'>
+			<field name="name">Students</field>
+			<field name="model">student.details</field>
+			<field name="arch" type="xml">
+				<tree string="student name">
+					<field name="stu_name"  />
+					<field name="mark_ids"/>
+				</tree>
+			</field>
+		</record>
+
+
+
+		
+
+		
+
+		<record model="ir.actions.act_window" id="action_student_marks">
+			<field name="name">Student Details</field>
+			<field name="res_model">student.details</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+	
+
+		<menuitem id="mark_menu_student_manager" 
+				name="Marks" parent="main_sub_menu_student_manager" action="action_student_marks"/>
+	</data>
+</openerp>
+
