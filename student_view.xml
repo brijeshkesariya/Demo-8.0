@@ -1,0 +1,138 @@
+<?xml version ="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="action_view_student_student_form">
+			<field name="name">Students</field>
+			<field name="model">student.student</field>
+			<field name="arch" type="xml">
+				<form string="student name">
+					<header>
+						<button name="check" string="Check" class="oe_highlight" states="draft" />
+						<button name="confirm" string="Confirm" class="oe_highlight" states="pending" />
+						<field name="state"  widget="statusbar" statusbar_visible="draft,pending,done" statusbar_colors="{‘draft’:’red’,’done’:’blue’}" />
+					</header>
+					<sheet> 
+					<field name="image"  widget="image" class="oe_avatar oe_left" nolabel="True" />
+						<group>
+						<field name="validate" />
+						<group>
+							<field name="stu_name" colspan="2" />
+							<field name='tag_ids' widget="many2many_tags"/>  <!--Search Usage Of widgets in openerp site For E.g. widget="selection" in case of many2one field converts it in select box(Try it  :P )-->
+						</group>
+						<group>
+							<field name="date_of_birth" />
+							<field name="mob" />
+							<field name="age" />
+							<field name="weight" />
+							<field name="height" />
+						</group>
+						</group>
+						<group>
+							<field name='details'/>	
+						</group>
+					     <notebook>
+						 <page string='History'>
+						<field name="acad_id">
+						      <tree editable='top'>
+							  <field name='school' />
+						          <field name='percentage' /> 
+						      </tree>	 		
+						</field>
+					      </page>
+					  </notebook>
+				 	</sheet>	
+			       </form>
+			</field>
+           	</record>
+
+		<record model='ir.ui.view' id='view_student_student_tree'>
+			<field name="name">Students</field>
+			<field name="model">student.student</field>
+			<field name="arch" type="xml">
+				<tree string="student name">
+					<field name="stu_name"  />
+					<field name="details"/>
+					<field name="date_of_birth" />
+					<field name="mob" />
+					<field name='tag_ids' widget="many2many_tags"/>	
+					
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="student_student_kanban_view">
+       		     <field name="name">student Details kanban</field>
+            	     <field name="model">student.student</field>
+                     <field name="type">kanban</field>
+                     <field name="arch" type="xml">
+                	<kanban>
+                          <field name="stu_name" />
+                          <field name="image" />
+                          <templates>
+                           <t t-name="kanban-box">
+                            <div class="oe_product_vignette">
+                                <a type="open">
+                                    <img class="oe_kanban_image"
+                                        t-att-src="kanban_image('student_student','image',record.id.value)" />
+                                </a>
+                                <div class="oe_product_desc">
+                                    <h4>
+                                        <a type="edit">
+                                            <field name="stu_name" ></field>
+                                        </a>
+                                    </h4>
+                                    <ul>
+                                        <li><b>Date Of Birth :</b> <field name="date_of_birth" /></li>
+                                        <li><b>Mobile   :</b> <field name="mob" class="oe_student_tree" /> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                           </t>
+                         </templates>
+                       </kanban>
+                     </field>
+                </record>
+
+		<record model="ir.ui.view" id="view_student_student_calendar">
+       		     <field name="name">student Details calendar</field>
+            	     <field name="model">student.student</field>
+                     <field name="type">calendar</field>
+                     <field name="arch" type="xml">
+			<calendar string="calendar" date_start="date_of_birth" day_length="1" color="stu_name">
+   		   		<field name="stu_name"/>
+   			</calendar>
+         	     </field>
+                </record>
+
+		<record model="ir.ui.view" id="view_student_student_graph">
+		     <field name="name">student.student.graph</field>
+		     <field name="model">student.student</field>
+		     <field name="arch" type="xml">
+			<graph string="Student Analysis" type="pivot">
+			   <field name="stu_name" type="row"/>
+			   <field name="mob" type="measure"/>
+			   <field name="age" type="measure"/>
+			   <field name="weight" type="measure"/>
+			   <field name="height" type="measure"/>
+			</graph>
+		       </field>
+		</record>
+	
+		<record model="ir.actions.act_window" id="action_student">
+			<field name="name">Student Details</field>
+			<field name="res_model">student.student</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban,calendar,graph</field>
+		</record>
+		
+		<menuitem id="main_menu_student_manager" 
+				name="Student Manager"/>
+
+		<menuitem id="main_sub_menu_student_manager" 
+				name="Student Details" parent="main_menu_student_manager" />
+
+		<menuitem id="main_parent_menu_student_manager" 
+				name="Students" parent="main_sub_menu_student_manager" action="action_student"/>
+	</data>
+</openerp>
+
